@@ -35,4 +35,4 @@ import { PostsListComponent } from './posts/posts-list/posts-list.component';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
