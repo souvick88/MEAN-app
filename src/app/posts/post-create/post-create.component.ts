@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Post } from '../post.model';
 import { NgForm } from '@angular/forms';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-create',
@@ -8,11 +9,14 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./post-create.component.css'],
 })
 export class PostCreateComponent {
+  constructor(public postsService: PostsService) { }
 
-  @Output() postCreated = new EventEmitter<Post>();
+  // @Output() postCreated = new EventEmitter<Post>();
+  // postCreated = new EventEmitter<Post>();
+
   enteredContent = '';
   enteredTitle = '';
-  enteredValue = '';
+  // enteredVgitalue = '';
   // randNum = (Math.random() * 10);
   randNum() {
     return (Math.random() * 10);
@@ -23,11 +27,12 @@ export class PostCreateComponent {
     if (form.invalid) {
       return;
     }
-    const post: Post = {
-      title: form.value.title,
-      content: form.value.content,
-      // myNum: this.randNum()
-    };
-    this.postCreated.emit(post);
+    // const post: Post = {
+    //   title: form.value.title,
+    //   content: form.value.content,
+    //   // myNum: this.randNum()
+    // };
+    // this.postCreated.emit(post);
+    this.postsService.addPost(form.value.title, form.value.content);
   }
 }
