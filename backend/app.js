@@ -1,15 +1,31 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 var cors = require('cors')
 
+const Post = require('./models/post');
 const app = express();
+
+mongoose.connect("mongodb+srv://newUser88:zcyIHvEfqdwt88t8@cluster0.nsap4.mongodb.net/myMEAN-app?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => {
+        console.log('connected to mongoDB');
+    })
+    .catch(() => {
+        console.log("connection failed");
+    })
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
 app.post("/api/posts", (req, res, next) => {
-    const post = req.body;
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    });
     console.log(post);
     res.status(201).json(
         {
