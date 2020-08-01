@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 var cors = require('cors')
 
 const Post = require('./models/post');
+const { createShorthandPropertyAssignment } = require("typescript");
 const app = express();
 
 mongoose.connect("mongodb+srv://newUser88:zcyIHvEfqdwt88t8@cluster0.nsap4.mongodb.net/myMEAN-app?retryWrites=true&w=majority", {
@@ -26,12 +27,15 @@ app.post("/api/posts", (req, res, next) => {
         title: req.body.title,
         content: req.body.content
     });
-    post.save();
-    res.status(201).json(
-        {
-            message: "posts addded successfully"
-        }
-    );
+    post.save().then(createdPost => {
+        // console.log(result);
+        res.status(201).json(
+            {
+                message: "posts addded successfully",
+                postId: createdPost._id
+            }
+        );
+    });
 })
 app.get('/api/posts', (req, res, next) => {
     // res.send('Hello from Express');
